@@ -1,0 +1,55 @@
+<%= form_for(@load, :remote => true) do |f| %>
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Load creation</h3>
+    </div>
+  <div class="modal-body">
+    <div style = "margin-left:15px; margin-right:40px;">
+     <div class="form-group row">
+        <label for="inputTruck" class="col-sm-2 form-control-label">Truck no</label>
+        <div class="col-sm-4">
+          <%= f.collection_select(:truck_id, @trucks, :id, :no, options = { prompt: "Please select", hide_label: :true }, html_options = {class: "input-sm form-control"} ) %>
+        </div>  
+        <label for="inputTruck" class="col-sm-2 form-control-label">Driver</label>
+      <div class="col-sm-4">
+          <%= f.collection_select(:worker_id, @drivers, :id, :name, options = { prompt: "Please select", hide_label: :true }, html_options = {class: "input-sm form-control"} ) %>
+        </div>  
+      </div>
+
+     <!-- Timeshift and date starts--> 
+     <div class="form-group row">
+        <label for="inputTimeShif" class="col-sm-2 form-control-label">Timeshift</label>
+        <div class="col-sm-4">
+          <%= f.collection_select(:timeshift_id, @timeshifts, :id, :name, options = { prompt: "Please select", hide_label: :true }, html_options = {class: "input-sm form-control"} ) %>
+        </div>
+        <label for="inputDate" class="col-sm-2 form-control-label">Date</label>
+                <div class='input-group date' id='datetimepicker1'>
+                              <%= f.text_field :date, :class => "form-control datepicker", :placeholder => "DD/MM/YYYY"%> 
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            <!--это для нажатия по иконке -->
+             <script type="text/javascript">
+                 $(function () {
+                     $('#datetimepicker1').datepicker();
+                 });
+              </script>
+              <!--это для нажатия по полю ввода -->
+              <script type="text/javascript">
+                 $(document).ready(function(){
+                     $('.datepicker').datepicker();
+                 });
+              </script>
+     </div>
+     <!-- Timeshift and date ends--> 
+
+
+    </div>
+  </div>
+</div>
+  <div class="modal-footer">
+    <%= f.submit "Save", :class => "btn btn-primary"%>
+    <button class="btn btn-default" data-dismiss="modal" aria-hidden="true" >Close</button>
+</div>
+<% end %>  

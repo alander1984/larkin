@@ -1,0 +1,7 @@
+$('#orderss').append('<%= j render @orders %>');
+<% if @orders.next_page %>
+  $('.pagination').replaceWith('<%= j will_paginate @orders %>');
+<% else %>
+  $(window).off('scroll');
+  $('.pagination').remove();
+<% end %>

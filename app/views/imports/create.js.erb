@@ -1,0 +1,4 @@
+$('#inputs').hide();
+$('#uploader').hide().after('<blockquote>Proceesed file <%= @import.attach_file_name %><hr>Size: <%= @import.attach_file_size %> bytes<hr>Found orders in file: <%= @rowCount %>');
+$('#btnProcess').hide();
+$('#mainTable').after('</br><h3>Go to <a href="<%= orders_path %>">raw orders</a></h3>');

@@ -1,0 +1,122 @@
+<%= form_for(@order) do |f| %>
+<div style = "margin-left:15px">
+	<h2>Order No. <%= @order.number %></h2>
+  <%= f.hidden_field :number, :value => @order.number %>
+	<table>
+		<col width="380">
+    <col width="450">
+		<tr>
+			<td valign='top'  rowspan="2"> 
+        <%= render(:partial => 'clients/form', :locals => {:client => @order.client}) %>
+				<div class="form-group row">
+    				<label for="inputUnitQuatity" class="col-sm-4 form-control-label">Unit quantity</label>
+    					<div class="col-sm-8">
+				    	<%= f.text_field :quantity, :class => "form-control", :placeholder => "Quantity" %>	
+    					</div>
+  				</div>
+  				<div class="form-group row">
+    				<label for="inputVolume" class="col-sm-4 form-control-label">Volume</label>
+    				<div class="col-sm-8">
+    					<%= f.text_field :volume, :class => "form-control", :placeholder => "Volume" %>	
+    				</div>
+  				</div>
+  				<div class="form-group row">
+    				<label for="inputOrigin" class="col-sm-4 form-control-label">Origin</label>
+
+
+    				<div class="col-sm-8">
+    				    <%= f.collection_select(:origin_id, @origins, :id, :name, options = { prompt: "Please select", hide_label: :true }, html_options = {class: "input-sm form-control", :onchange => "var vals= $(this).serialize();	$.ajax({type: 'GET', url: 'x/updateOriginInfo/'+this.value, data: vals, dataType: 'script' }).success(function(script){ }); return false;"} ) %>
+    				</div>
+  				</div>
+  				<div class="form-group row">
+  					<div class="col-sm-4"></div>
+  					<div class="well well-lg col-sm-8" id="address-box"><!--Сюда будет вставляться адрес--></div>
+  				</div>
+          <% if @order.persisted? %>
+            <div id="loadInfo">	
+              <%= render(:partial => 'loadInfo') %>  
+            </div>  
+          <% end %>  
+			</td>
+          <td valign='top'><%= render(:partial => 'addresses/form', :locals => {:address => @order.address, :state => @order.address.city.state, :country => @order.address.city.country}) %></td> <!--Почему-то двойной уровень вложенности структуры из форм не возвращался обратно в параметрах при submit, поэтому передаем отдельными параметрами-->
+		</tr>
+    <tr>
+      <td valing='top' >
+          <div class="form-group row" style="margin-left:40px">
+            <label for="inputTimeShift" class="col-sm-4 form-control-label">Pref. timeshift</label>
+            <div class="col-sm-8">
+                <%= collection_select(:order, :timeshift_id, @timeshifts, :id, :name, options = { prompt: "Please select", hide_label: :true }, html_options = {class: "input-sm form-control"} ) %>
+            </div>
+          </div>
+          <div class="form-group row" style="margin-left:40px">
+            <label for="inputPrefDate" class="col-sm-4 form-control-label">Pref.date</label>
+            <div class="col-sm-8">
+<!-- Извращения с выбором даты, однако -->                
+             <div class="form-group">
+                <div class='input-group date' id='datetimepicker1'>
+                              <%= f.text_field :prefdate, :class => "form-control datepicker", :placeholder => "DD/MM/YYYY", :value =>(@order.prefdate.blank? ? '' : @order.prefdate.strftime('%m/%d/%Y')) %> 
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+            <!--это для нажатия по иконке -->
+             <script type="text/javascript">
+                 $(function () {
+                     $('#datetimepicker1').datepicker();
+                 });
+              </script>
+              <!--это для нажатия по полю ввода -->
+              <script type="text/javascript">
+                 $(document).ready(function(){
+                     $('.datepicker').datepicker();
+                 });
+              </script>
+<!-- Извращения с выбором даты, однако -->                
+            </div>
+            </div>
+      </td>
+
+    </tr>
+    <tr>
+      
+	</table>	
+</div>	
+ <div stile="left-margin:15px;">
+ <table>
+  <col width="600"><col width="100">
+  <td>
+  </td>
+    <td>
+      <% if @order.persisted? %>
+       <%= link_to "Remove", order_path(:id => @order.id, :return_to => @back_url), html_options={ :class => "btn btn-default", :method => :delete, data: { confirm: 'Are you sure?' }} %>
+      <% end %>
+    </td>
+    <td>
+      <%= f.submit "Save", :class => "btn btn-primary"%>
+    </td>
+    <td>
+      <% if params['return_to'].nil? %>
+        <%= button_to "Cancel", orders_path , :class => "btn btn-defalt", :method => :get %>
+      <% else %>
+        <%= link_to "Cancel", loads_path+'?loadid='+@order.load_id.to_s , html_options={ :class => "btn btn-default", :method => :get} %>
+      <% end  %>
+    </td>  
+</table>      
+</div>  
+
+<div style = "margin-left:15px; margin-right:15px; margin-bottom:70px">
+<!-- наше пустое модальное окно для выбора load -->
+    <div id="loadModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content" id="mmmloadSelect" >
+          <div class="modal-header">Select available order list</div>
+          <div class="modal-body"></div>
+          <div class="modal-footer"></div>
+       </div>
+    </div>
+</div>
+
+<%= hidden_field_tag("return_to",@back_url) %>
+
+<% end %>

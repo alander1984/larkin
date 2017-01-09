@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet">
+    <Table>
+      <Row>
+      <Cell><Data ss:Type="String">Date: <%= @load.date.strftime('%m/%d/%Y') %>; timeshift <%= @load.timeshift.name %></Data></Cell>
+      </Row>
+      <Row>
+        <Cell><Data ss:Type="String">Number</Data></Cell>
+        <Cell><Data ss:Type="String">Client name</Data></Cell>
+        <Cell><Data ss:Type="String">Phone</Data></Cell>
+        <Cell><Data ss:Type="String">Address</Data></Cell>
+        <Cell><Data ss:Type="String">Origin</Data></Cell>
+        <Cell><Data ss:Type="String">Unit quantity</Data></Cell>
+      </Row>
+      <% @loadOrders.each do |order| %>
+        <Row>
+          <Cell><Data ss:Type="String"><%= order.number %></Data></Cell>
+          <Cell><Data ss:Type="String"><% if order.client!=nil %><%= order.client.name %><% end %></Data></Cell>
+          <Cell><Data ss:Type="String"><% if order.client!=nil %><%= order.client.phone %><% end %></Data></Cell>
+          <Cell><Data ss:Type="String"><% if order.address!=nil %><%= order.address.city.state.country.name+' '+order.address.city.state.name+' '+order.address.city.name+' '+order.address.zip+' '+order.address.rawline %><% end %></Data></Cell>
+          <Cell><Data ss:Type="String"><% if order.origin!=nil %><%= order.origin.name %><% end %></Data></Cell>
+          <Cell><Data ss:Type="String"><%= order.quantity %></Data></Cell>
+        </Row>
+      <% end %>  
+    </Table>
+  </Worksheet>
+</Workbook>

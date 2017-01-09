@@ -1,0 +1,65 @@
+<div style = "margin-left:15px; margin-right:15px; margin-bottom:70px">
+<!-- наше модальное окно для выбора -->
+		<div id="modal1" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content" id="mmm" >
+					<div class="modal-header">Load creation</div>
+					<div class="modal-body"></div>
+					<div class="modal-footer"></div>
+				</div>
+			</div>
+		</div>
+
+<table width="100%%">
+	<col>
+	<col width="370">
+	<tr>
+	<td height=0><h2>Raw orders</h2></td>
+	<td height="0"><div style="text-align:right">
+				<%= button_to "Register order", new_order_path, :class => "btn btn-primary", :method => :get %>
+			</div>
+		</td>	
+	</tr>
+	<tr>
+	<td>
+	<!--Здесь собственно основная таблица с заказами  -->
+		<div id="infinite-scrolling">
+			<%= will_paginate %>
+		</div>
+		<table class="table-bordered table-striped table-condensed cf"  id="orderss">
+			<thead>
+				<th>#</th>
+				<th>Client name</th>
+				<th>Phone</th>
+				<th>Destination address</th>
+				<th>Origin</th>
+				<th>Pref. datetime</th>
+				<th>Order params</th>
+				<th>Actions</th>
+			</thead>
+			<tbody>
+				<%= render @orders %>
+			</tbody>
+		</table>
+	<!--Здесь заканчивается основная таблица с заказами -->
+	</td>
+	<td align = "center" valign="top">
+		<h3>Loads/routings lists  <%= link_to new_load_path, class: "btn btn-default", remote: true, :data => {:toggle=>"modal", :target => '#modal1'} do %>
+    		<i class="glyphicon glyphicon-plus"></i>
+			<% end %>
+		</h3>
+	<!--Здесь собственно таблица с loads  -->
+	<div style="margin-left:15px;">
+		<table class="table table-bordered table-striped table-condensed cf" id='loadsTable'>
+			<thead>
+			</thead>
+			<tbody>
+				<%= render @loads %>
+			</tbody>
+		</table>
+		</div>
+	<!--Здесь заканчивается таблица с loads -->
+	</td>	
+	</tr>
+</table>
+</div>

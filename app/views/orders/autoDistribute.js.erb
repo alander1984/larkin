@@ -1,0 +1,7 @@
+$('#loadsTable tbody').html('<%= j render @loads %>');
+alert('<%= @userInfo %>');
+$('#status_bar').html('<%= @userInfo %>');
+//Немножко быдло-кода )) сравнение потом перепишем
+if ('<%= !@order.load.nil? %>'=='true') {
+	$('#orderRowID<%= @order.id %>').fadeOut(2000);
+}	

@@ -1,0 +1,21 @@
+<tr class="<%= 'warning' if !load.validRest %>">
+	<td>
+		<% if load.date!=nil %><%= load.date.strftime('%m/%d/%Y')+' ' %><% end %>
+	</td>	
+	<td>
+		<% if load.timeshift!=nil %><%= load.timeshift.code+' ' %><% end %>
+	</td>
+	<td>
+		<% if load.truck!=nil %><%= load.truck.no+' ' %><% end %>
+	</td>
+	<td>
+		<% if load.worker!=nil %><%= load.worker.name %><% end %>
+	</td>
+	<td>
+		<% if load.validRest %>
+			<% if load.worker!=nil %><%= load.loadedPercent %>%<% end %>
+		<% else %>
+			Invalid
+		<% end %>	
+	</td>
+</tr>

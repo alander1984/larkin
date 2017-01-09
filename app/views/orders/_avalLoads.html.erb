@@ -1,0 +1,15 @@
+	<div class="modal-header">
+    	<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    	<h3 id="myModalLabel">Select available order list</h3>
+	</div>
+	<div class="modal-body">
+		<% @avalLoads.each do |item| %>
+			<%= radio_button :object, :load_id, item.id, html_options = {:onClick => "document.getElementById('selectedLoad').value='"+item.id.to_s+"'; document.getElementById('chooseBtn').href='"+orders_path+'/'+@order.id.to_s+'/fixSelectedLoad/'+item.id.to_s+"';", :disabled => !item.validRest } %> <%= item.date.strftime('%m/%d/%Y')+' '+item.timeshift.name+' '+item.truck.no+' '+item.worker.name %><% if !item.validRest %> <i>(Invalid load)</i><% end %><br />
+		<% end %>
+		<%= hidden_field_tag("selectedLoad",'') %>
+	</div>
+	<div class="modal-footer">
+		<%= link_to "Choose", orders_path+'/'+@order.id.to_s+'/fixSelectedLoad' ,  html_options={ :id => "chooseBtn", :class => "btn btn-primary", :method => :get, :remote => :true, :onclick => 'document.getElementById("load_id").value=document.getElementById("selectedLoad").value;'} %>
+		<button class="btn btn-default" data-dismiss="modal" aria-hidden="true" >Close</button>
+	</div>
+<!--, :data => {:toggle=>"modal", :target => '#loadModal'}-->

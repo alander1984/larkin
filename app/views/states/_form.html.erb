@@ -1,0 +1,10 @@
+<%= form_for(state, :html => {:class => 'form-horizontal', :style => 'margin-top:15px'}) do |f| %>
+  
+   <div class="form-group row">
+    <label for="inputName" class="col-sm-4 form-control-label">State</label>
+    <div class="col-sm-8">
+  <%= collection_select(:state, :country_id, @countries, :id, :name, options = { prompt: "Please select", :selected => params[:search], hide_label: :true }, html_options = {class: "input-sm form-control", :onchange => "var vals= $(this).serialize();	$.ajax({type: 'GET', url: 'x/updateOriginInfo/'+this.value, data: vals, dataType: 'script' }).success(function(script){ }); return false;"} ) %>
+ 	<%= f.text_field :name, :class => "form-control", :placeholder => "State" %>	-->
+    </div>
+  </div>
+<% end %>    

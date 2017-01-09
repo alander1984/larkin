@@ -1,0 +1,29 @@
+<% loadOrders.each do |order| %>
+	<tr id="orderRowID<%= order.id %>">
+    	<td><%= order.number %></td>
+    	<td><% if order.client!=nil %><%= order.client.name %><% end %></td>
+    	<td><% if order.client!=nil %><%= order.client.phone %><% end %></td>
+    	<td><% if order.address!=nil %><%= order.address.city.state.country.name+' '+order.address.city.state.name+' '+order.address.city.name+' '+order.address.zip+' '+order.address.rawline %><% end %></td>
+		<td><% if order.prefdate!=nil %><%=  order.prefdate.strftime("%m/%d/%Y") %> <% end %><% if order.timeshift!=nil %><%= order.timeshift.code %><% end %></td>
+		<td>Vol: <%= order.volume %>; <%= order.quantity %> box</td>
+		<% if current_worker.roles.find_by(code: "disp")!=nil %>
+		<td>
+			<table>
+				<tr>
+					<td rowspan=2>
+						<%= link_to 'Open', order_path(order.id)+'?return_to=loads' %>
+					</td>
+					<td>
+						<%= link_to orderUp_path(order.id), remote: true, class: "btn btn-default" do %><i class="glyphicon glyphicon-upload"></i><% end %>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<%= link_to orderDown_path(order.id), remote: true, class: "btn btn-default" do %><i class="glyphicon glyphicon-download"></i><% end %>
+					</td>
+				</tr>
+			</table>				
+		</td>	
+		<% end %>
+	</tr>
+<% end %>

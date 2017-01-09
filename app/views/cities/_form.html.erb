@@ -1,0 +1,10 @@
+<%= form_for(city, :html => {:class => 'form-horizontal', :style => 'margin-top:15px'}) do |f| %>
+  <%= render(:partial => 'states/form', :locals => {:state => city.state}) %>
+   <div class="form-group row">
+
+    <label for="inputName" class="col-sm-4 form-control-label">City</label>
+    <div class="col-sm-8">
+    	<%= f.text_field :name, :class => "form-control", :placeholder => "City" %>	
+    </div>
+  </div>
+<% end %>    

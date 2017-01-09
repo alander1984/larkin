@@ -1,0 +1,9 @@
+<blockquote id="statuspanel"><%= @statusString %></blockquote>
+<% if @order.load.nil? %>
+  	<%= link_to "Place into load", selectLoad_url(@order.id) , html_options={ :class => "btn btn-success", :method => :get, :remote => :true, :data => {:toggle=>"modal", :target => '#loadModal'} }  %>
+<% else %>
+	<%= link_to "Remove from load", removeFromLoad_url(@order.id) , html_options={ :class => "btn btn-warning", :method => :get, :remote => :true } %>
+<% end %>
+<%= hidden_field_tag(:load_id,@order.load_id) %>
+
+

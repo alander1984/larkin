@@ -1,0 +1,67 @@
+<table width="100%%">
+	<col width="330">
+	<tr>
+		<td rowspan=2 valign="top">
+				<% if @loads.empty? %>
+					<div class="alert alert-info" role="alert">
+  						<p>No active Loads...</p>
+					</div>
+				<% else %>
+					<div class="list-group">
+						<% @loads.each do |load| %>
+							<%= render(:partial => "linkLoad", :locals => {:load => load}) %>
+  						<% end %>	
+					</div>
+				<% end %>
+		</td>
+		<td valign="top">
+			<div class="panel panel-info" style = "margin-left:15px; margin-right:15px;">
+				<div class="panel-heading">Routing list information</div>
+  				<div class="panel-body" id="loadInfo">
+							<% if params['loadid'].nil? %>
+								Please select load...
+							<% else %>
+								<%= render(:partial => "inlineLoad", :locals => {:load => Load.find(params["loadid"])}) %>
+							<% end %>		  				  
+ 			 	</div>
+ 			
+			</div>
+		</td>
+		<td height="0" valign = "top">
+			<% if current_worker.roles.find_by(code: "disp")!=nil %>
+				<div style="margin-right:40px; text-align:right">
+					<%= button_to "Register order", new_order_path, :class => "btn btn-primary", :method => :get %>
+				</div>	
+			<% end %>
+		</td>	
+	</tr>
+	<tr>
+		<td valign = "top" colspan=2>
+			<div style="margin-left:15px;margin-right:15px;margin-bottom:50px">
+				
+				<table class="table-bordered table-striped table-condensed cf" id="loadTable" >
+					<thead>
+						<th>#</th>
+						<th>Client name</th>
+						<th>Phone</th>
+						<th>Address</th>
+						<th>Pref. date</th>
+						<th>Order params</th>
+						<% if current_worker.roles.find_by(code: "disp")!=nil %>
+							<th>Actions</th>
+						<% end %>	
+					</thead>
+					<tbody>
+						<tr><td colspan=7>
+							<% if params['loadid'].nil? %>
+								<div class="alert alert-info" role="alert">No orders... Select please load with orders inside</div>
+							<% else %>
+								<%= render(:partial => "currentOrders",:locals => {:loadOrders => @loadOrders}) %>
+							<% end %>		
+						</td></tr>				
+					</tbody>	
+				</table>
+			</div>	
+		</td>
+	</tr>
+</table>

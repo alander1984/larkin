@@ -1,0 +1,7 @@
+<%= link_to showLoadContent_url(load.id), id: "loadListItem"+load.id.to_s, class: "list-group-item #{'list-group-item-warning' if !load.validRest}", remote: true do %>
+  	<% if load.date!=nil %><%= load.date.strftime('%m/%d/%Y')+' ' %><% end %>
+  	<% if load.timeshift!=nil %><%= load.timeshift.code+' ' %><% end %>
+  	<% if load.truck!=nil %><%= load.truck.no+' ' %><% end %>
+  	<% if load.worker!=nil %><%= load.worker.name+' ' %><% end %>
+  	<%= load.loadedPercent.to_s+'%' %>
+<% end %>

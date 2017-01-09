@@ -1,0 +1,42 @@
+<div class="panel panel-default" style="margin-left:40px">
+  <div class="panel-heading">Destination address</div>
+  <div class="panel-body">
+<%= form_for(address, :html => {:class => 'form-horizontal', :style => 'margin-top:15px'}) do |f| %>
+	<%= form_for(address.city, :html => {:class => 'form-horizontal', :style => 'margin-top:15px'}) do |f1| %>
+		<%= form_for(:state, :html => {:class => 'form-horizontal', :style => 'margin-top:15px'}) do |f2| %>
+			<div class="form-group row">
+    			<label for="inputCountry" class="col-sm-4 form-control-label">Country</label>
+    			<div class="col-sm-8">
+    				<%= f1.collection_select(:country_id, @countries, :id, :name, options = { prompt: "Please select", hide_label: :true }, html_options = {class: "input-sm form-control"} ) %>
+    			</div>
+  			</div>
+  		<% end %>	
+			<div class="form-group row">
+    			<label for="inputState" class="col-sm-4 form-control-label">State</label>
+    			<div class="col-sm-8">
+    				<%= f1.collection_select(:state_id, @states, :id, :name, options = { prompt: "Please select", hide_label: :true }, html_options = {class: "input-sm form-control"} ) %>
+    			</div>
+  			</div>
+		<div class="form-group row">
+    		<label for="inputCity" class="col-sm-4 form-control-label">City</label>
+    		<div class="col-sm-8">
+    			<%= f1.text_field :name, :class => "form-control", :placeholder => "City" %>
+    		</div>
+  		</div>
+  	<% end %>	
+
+	<div class="form-group row">
+    	<label for="inputRawline" class="col-sm-4 form-control-label">Rawline</label>
+    	<div class="col-sm-8">
+    		<%= f.text_field :rawline, :class => "form-control", :placeholder => "Rawline" %>
+    	</div>
+  	</div>
+	<div class="form-group row">
+    	<label for="inputZip" class="col-sm-4 form-control-label">ZIP</label>
+    	<div class="col-sm-8">
+    		<%= f.text_field :zip, :class => "form-control", :placeholder => "ZIP" %>
+    	</div>
+  	</div>
+<% end %>    
+  </div>
+</div>

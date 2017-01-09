@@ -1,0 +1,18 @@
+<table class="table-bordered table-striped table-condensed cf">
+	<thead>
+		<th>E-mail</th>
+		<th>Name</th>
+		<th>Last sign in</th>
+		<th>Last ip</th>
+	</thead>
+	<tbody>
+		<% Worker.all.each do |item| %>
+			<tr>
+				<td><%= item.email %></td>
+				<td><%= item.name %></td>
+				<td><%= item.last_sign_in_at.to_s %></td>
+				<td><%= item.last_sign_in_ip.to_s %></td>
+			</tr>	
+		<% end %>
+	</tbody>	
+</table>

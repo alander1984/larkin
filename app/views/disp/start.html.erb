@@ -1,0 +1,37 @@
+<table width="100%%">
+	<col width="380">
+	<tr>
+		<td rowspan=2 valign="top">
+				<% if @activeLoads.empty? %>
+					<div class="alert alert-info" role="alert">
+  						<p>No active Loads...</p>
+					</div>
+				<% else %>
+					<div class="list-group">
+						<% @activeLoads.each do |load| %><%= link_to loads_path+'?loadid='+load.id.to_s, id: "news1", class: "list-group-item #{'list-group-item-warning' if !load.validRest}" do %>
+  								<% if load.date!=nil %><%= load.date.strftime('%m/%d/%Y')+' ' %><% end %>
+  								<% if load.timeshift!=nil %><%= load.timeshift.code+' ' %><% end %>
+  								<% if load.truck!=nil %><%= load.truck.no+' ' %><% end %>
+  								<% if load.worker!=nil %><%= load.worker.name+' ' %><% end %>
+  								<%= load.loadedPercent.to_s+'%' %>
+  							<% end %>
+  						<% end %>	
+					</div>
+				<% end %>
+		</td>
+		<td height="0">
+			<div style="margin-right:40px; text-align:right">
+				<%= button_to "Register order", new_order_path, :class => "btn btn-primary", :method => :get %>
+			</div>	
+		</td>	
+	</tr>
+	<tr>
+		<td valign = "top">
+			<div style="margin-left:40px;">
+				<h1><%= link_to "Raw orders", orders_path %> <span class="badge"><%= Order.where('load_id is null').count.to_s%></span></h1>
+				<h1>Delivered today</h1>
+				<h1><%= link_to "Ready for delivering", loads_path %> <span class="badge"><%= @readyOrders %></span></h1>
+			</div>	
+		</td>
+	</tr>
+</table>

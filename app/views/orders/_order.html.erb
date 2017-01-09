@@ -1,0 +1,12 @@
+<tr id="orderRowID<%= order.id %>">
+      <td><%= order.number %></td>
+      <td><% if order.client!=nil %><%= order.client.name %><% end %></td>
+      <td><% if order.client!=nil %><%= order.client.phone %><% end %></td>
+      <td><% if order.address!=nil %><%= order.address.to_s %><% end %></td>
+      <td><% if order.origin!=nil %><%= order.origin.name %><% end %></td>
+      <!--адрес исходной точки убрал пока... их мало, поэтому имени достаточно 
+      +' '+order.origin.address.city.state.country.name+' '+order.origin.address.city.state.name+' '+order.origin.address.city.name+' '+order.origin.address.zip+' '+order.origin.address.rawline-->
+	<td><% if order.prefdate!=nil %><%=  order.prefdate.strftime("%m/%d/%Y") %>//<% end %><% if order.timeshift!=nil %><%= order.timeshift.code %><% end %></td>
+	<td>Vol: <%= order.volume %>; <%= order.quantity %> box</td>
+	<td><%= link_to 'Open', order %> <%= link_to 'Auto', autoOrderDistribute_url(order), remote: true %></td>
+</tr>

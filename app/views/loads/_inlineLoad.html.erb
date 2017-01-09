@@ -1,0 +1,66 @@
+<%= form_for(load, :remote => true) do |f| %>
+     <div class="form-group row">
+        <label for="inputTruck" class="col-sm-2 form-control-label">Truck no</label>
+        <div class="col-sm-4">
+          <%= f.collection_select(:truck_id, @trucks, :id, :no, options = { prompt: "Please select", hide_label: :true }, html_options = {class: "input-sm form-control"} ) %>
+        </div>  
+        <label for="inputTruck" class="col-sm-2 form-control-label">Driver</label>
+        <div class="col-sm-4">
+          <%= f.collection_select(:worker_id, @drivers, :id, :name, options = { prompt: "Please select", hide_label: :true }, html_options = {class: "input-sm form-control"} ) %>
+        </div>  
+      </div>
+
+     <!-- Timeshift and date starts--> 
+     <div class="form-group row">
+        <label for="inputTimeShif" class="col-sm-2 form-control-label">Timeshift</label>
+        <div class="col-sm-4">
+          <%= f.collection_select(:timeshift_id, @timeshifts, :id, :name, options = { prompt: "Please select", hide_label: :true }, html_options = {class: "input-sm form-control"} ) %>
+        </div>
+        <label for="inputDate" class="col-sm-2 form-control-label">Date</label>
+                <div class='input-group date' id='datetimepicker1'>
+                              <%= f.text_field :date, :class => "form-control datepicker", :placeholder => "DD/MM/YYYY", :value =>(load.date.blank? ? '' : load.date.strftime('%m/%d/%Y'))%> 
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            <!--это для нажатия по иконке -->
+             <script type="text/javascript">
+                 $(function () {
+                     $('#datetimepicker1').datepicker();
+                 });
+              </script>
+              <!--это для нажатия по полю ввода -->
+              <script type="text/javascript">
+                 $(document).ready(function(){
+                     $('.datepicker').datepicker();
+                 });
+              </script>
+     
+     <!-- Timeshift and date ends--> 
+
+
+    </div>	
+
+  <table width="100%%">
+    <col width="250px">
+    <tr>
+      <td>
+        <div class="form-group row" style="margin-top:0px">
+          <label class="col-sm-3 form-control-label">Status</label>
+          <div class="col-sm-8">
+            <%= f.select(:status, [['New',0],['In progress',1]],{}, html_options= {:class=>'input-sm form-control'}) %>
+          </div>
+        </div>
+      </td>
+      <td align = "right">
+        <% if current_worker.roles.find_by(code: "disp")!=nil %>
+          <%= link_to "Remove", load, html_options={ :class => "btn btn-default", :method => :delete, data: { confirm: 'Are you sure? All linked orders will become raw...' }} %>
+        <% end %>  
+        <%= link_to "Download", load_path(load.id,format: "xls"), html_options={ :class => "btn btn-primary"} %>
+        <% if current_worker.roles.find_by(code: "disp")!=nil %>
+          <%= f.submit "Save changes", :class => "btn btn-primary"%>
+        <% end %>  
+      </td>
+    </tr>
+  </table>
+<% end %>	

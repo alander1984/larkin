@@ -1,0 +1,2 @@
+$('#loadTable tbody').html('<%= j render(:partial => "currentOrders",:locals => {:loadOrders => @loadOrders}) %>');
+$('#loadInfo').html('<%= j render(:partial => "inlineLoad", :locals => {:load => Load.find(params["id"])}) %>');

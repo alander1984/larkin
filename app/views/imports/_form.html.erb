@@ -1,0 +1,20 @@
+<%= form_for(@import, :html => {:multipart => true }, :remote => true, :method => "post") do |f| %>
+	<div class="form-group row", style="margin-left:15px;">
+		<table id="mainTable">
+			<tr>
+				<td id="inputs">
+					<label for="inputOrigin" class="form-control-label">CSV upload file select</label>
+				</td>
+				<td style="padding-left:15px">
+					<%= f.file_field :attach, :class => "form-control-label", :id => "uploader" %>
+				</td>
+			</tr>
+			<tr>
+					<td></td>
+					<td align="right">
+						<%= f.submit "Process file", :class => "btn btn-primary", :id => "btnProcess"%>
+					</td>
+			</tr>
+		</table>
+	</div>
+<% end %>
